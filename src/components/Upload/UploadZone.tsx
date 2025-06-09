@@ -8,14 +8,11 @@ import { useWebSocket } from '../../hooks/useWebSocket';
 import { toast } from 'react-hot-toast';
 import { useNavigate } from 'react-router-dom';
 
-
-
 interface UploadZoneProps {
   initialVideo?: string;
   initialReport?: any;
   initialReportUrl?: string;
 }
-
 
 const UploadZone: React.FC<UploadZoneProps> = ({ initialVideo, initialReport, initialReportUrl }) => {
   const [uploadProgress, setUploadProgress] = useState(0);
@@ -25,7 +22,6 @@ const UploadZone: React.FC<UploadZoneProps> = ({ initialVideo, initialReport, in
   const [previewUrl, setPreviewUrl] = useState<string | null>(null);
   const [currentVideoId, setCurrentVideoId] = useState<string | null>(null);
   const navigate = useNavigate();
-  
 
   const { isComplete, processedVideoUrl, reportUrl, reportRes } = useWebSocket(currentVideoId || '', () => {
     if (currentVideoId && processedVideoUrl) {
