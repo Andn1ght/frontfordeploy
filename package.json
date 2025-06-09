@@ -1,10 +1,15 @@
 {
+  "name": "SecureVison",
+  "version": "1.0.0",
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "tsc && vite build",
+    "build": "vite build",
+    "type-check": "tsc --noEmit", 
     "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "prebuild": "npm run type-check", 
+    "postinstall": "npm run type-check" 
   },
   "dependencies": {
     "@headlessui/react": "^1.7.18",
@@ -37,6 +42,16 @@
     "postcss": "^8.5.3",
     "tailwindcss": "^3.4.17",
     "typescript": "^5.2.2",
-    "vite": "^5.1.6"
-  }
+    "vite": "^5.1.6",
+    "vite-plugin-checker": "^0.8.3" 
+  },
+  "engines": {
+    "node": ">=18.0.0",
+    "npm": ">=9.0.0"
+  },
+  "browserslist": [
+    ">0.2%",
+    "not dead",
+    "not op_mini all"
+  ]
 }
