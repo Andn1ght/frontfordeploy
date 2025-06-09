@@ -97,8 +97,11 @@ const UploadZone: React.FC<UploadZoneProps> = ({ initialVideo, initialReport, in
 
   const { getRootProps, getInputProps, isDragActive } = useDropzone({
     onDrop,
-    accept: { 'video/mp4': ['.mp4'] },
+    accept: { 
+      'video/mp4': ['.mp4'],
+    },
     maxFiles: 1,
+    maxSize: 16 * 1024 * 1024, // 16MB в байтах
     disabled: uploadState !== 'idle'
   });
 
@@ -146,7 +149,7 @@ const UploadZone: React.FC<UploadZoneProps> = ({ initialVideo, initialReport, in
               <ul className="text-sm text-gray-600 dark:text-gray-400 space-y-1">
                 <li>• Weapons (firearms, knives)</li>
                 <li>• Suspicious objects</li>
-                <li>• Person tracking</li>
+                <li>• Tracking</li>
                 <li>• Behavioral analysis</li>
               </ul>
             </div>
@@ -171,7 +174,7 @@ const UploadZone: React.FC<UploadZoneProps> = ({ initialVideo, initialReport, in
               </p>
               <AlertCircle className="h-5 w-5 text-gray-400 mx-auto mb-2" />
               <p className="text-sm text-gray-500 dark:text-gray-400">
-                Maximum file size: 500MB
+                Maximum file size: 16MB(temporarily)
               </p>
             </div>
           )}

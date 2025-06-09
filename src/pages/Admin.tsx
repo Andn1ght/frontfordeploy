@@ -22,7 +22,7 @@ const Admin: React.FC = () => {
   const tabs = [
     { id: 'users', label: 'Users', icon: Users },
     { id: 'videos', label: 'Videos', icon: FileVideo },
-    { id: 'logs', label: 'Audit Logs', icon: Activity },
+  
   ];
 
   return (
@@ -72,7 +72,7 @@ const Admin: React.FC = () => {
           <div className="p-6">
             {activeTab === 'users' && <UserManagement />}
             {activeTab === 'videos' && <Videos />}
-            {activeTab === 'logs' && <AuditLogs />}
+           
           </div>
         </div>
       </div>
