@@ -1,28 +1,51 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Shield, Users, FileVideo, Activity, ArrowLeft } from 'lucide-react';
-import { motion } from 'framer-motion';
+import { Shield, Users, FileVideo, ArrowLeft } from 'lucide-react';
 import { useAuth } from '../hooks/useAuth';
-import AuditLogs from '../components/Admin/AuditLogs';
 import UserManagement from '../components/Admin/Users';
 import Videos from '../components/Admin/Videos';
+import { useTranslation } from 'react-i18next';
+import i18n from '../i18n'; // этот путь должен указывать на твой i18n.ts
+
+
+const LanguageSwitcher: React.FC = () => {
+  const { i18n } = useTranslation();
+
+  const toggleLanguage = () => {
+    const newLang = i18n.language === 'ru' ? 'en' : 'ru';
+    i18n.changeLanguage(newLang);
+    localStorage.setItem('i18nextLng', newLang);
+    console.log('Language switched to:', newLang);
+  };
+  
+
+  return (
+    <button
+      onClick={toggleLanguage}
+      className="ml-4 px-3 py-1 rounded-lg bg-gray-200 dark:bg-dark-600 text-sm hover:bg-gray-300 dark:hover:bg-dark-500 transition"
+      aria-label="Toggle language"
+    >
+      {i18n.language === 'ru' ? 'EN' : 'RU'}
+    </button>
+  );
+};
 
 const Admin: React.FC = () => {
   const { isAdmin } = useAuth();
   const navigate = useNavigate();
-  const [activeTab, setActiveTab] = useState<'users' | 'videos' | 'logs'>('users');
+  const { t } = useTranslation();
+
+  const [activeTab, setActiveTab] = useState<'users' | 'videos'>('users');
 
   useEffect(() => {
-    // Redirect non-admin users
     if (!isAdmin) {
       navigate('/dashboard');
     }
   }, [isAdmin, navigate]);
 
   const tabs = [
-    { id: 'users', label: 'Users', icon: Users },
-    { id: 'videos', label: 'Videos', icon: FileVideo },
-  
+    { id: 'users', label: t('Users'), icon: Users },
+    { id: 'videos', label: t('Videos'), icon: FileVideo },
   ];
 
   return (
@@ -32,19 +55,23 @@ const Admin: React.FC = () => {
           <div className="flex items-center space-x-4">
             <Shield className="h-8 w-8 text-primary-500" />
             <div>
-              <h1 className="text-2xl font-bold">Admin Dashboard</h1>
+              <h1 className="text-2xl font-bold">{t('Admin Dashboard')}</h1>
               <p className="text-sm text-gray-500 dark:text-gray-400">
-                Manage users, videos, and system logs
+                {t('Manage users, videos, and system logs')}
               </p>
             </div>
           </div>
-          <button
-            onClick={() => navigate('/dashboard')}
-            className="flex items-center space-x-2 px-4 py-2 text-gray-600 dark:text-gray-300 hover:text-primary-500 dark:hover:text-primary-400 transition-colors"
-          >
-            <ArrowLeft className="h-5 w-5" />
-            <span>Back to Dashboard</span>
-          </button>
+
+          <div className="flex items-center">
+            <button
+              onClick={() => navigate('/dashboard')}
+              className="flex items-center space-x-2 px-4 py-2 text-gray-600 dark:text-gray-300 hover:text-primary-500 dark:hover:text-primary-400 transition-colors"
+            >
+              <ArrowLeft className="h-5 w-5" />
+              <span>{t('Back to Dashboard')}</span>
+            </button>
+            <LanguageSwitcher />
+          </div>
         </div>
       </div>
 
@@ -72,7 +99,6 @@ const Admin: React.FC = () => {
           <div className="p-6">
             {activeTab === 'users' && <UserManagement />}
             {activeTab === 'videos' && <Videos />}
-           
           </div>
         </div>
       </div>

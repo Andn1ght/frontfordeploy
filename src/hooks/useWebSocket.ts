@@ -3,7 +3,7 @@ import { toast } from 'react-hot-toast';
 import { videoService } from '../services/videoService';
 import { Detection } from '../types';
 
-const WS_URL = import.meta.env.VITE_WS_URL || 'ws://localhost:3000/ws';
+const WS_URL = import.meta.env.VITE_WS_URL || 'wss://localhost:3000/ws';
 
 export const useWebSocket = (videoId: string, onComplete?: () => void) => {
   const [isComplete, setIsComplete] = useState(false);
